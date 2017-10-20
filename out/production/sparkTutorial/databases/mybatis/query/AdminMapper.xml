@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="databases.mybatis.mapper.AdminMapper">
+
+    <select id="getAdmin" resultType="DataMap">
+        SELECT * FROM tblAdmin WHERE adminNo = #{no} LIMIT 1
+    </select>
+
+    <select id="AdminLogin" resultType="DataMap">
+        SELECT * FROM tblAdmin WHERE adminID = #{id} AND adminPwd = #{pwd} LIMIT 1
+    </select>
+
+</mapper>
