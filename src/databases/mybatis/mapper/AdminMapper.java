@@ -9,7 +9,7 @@ import server.comm.DataMap;
 public interface AdminMapper {
 
     DataMap getAdmin(@Param("no") int no);
-
     DataMap AdminLogin(@Param("id") String id, @Param("pwd") String pwd);
-
+    DataMap saveAdmin(@Param("id") String id, @Param("pwd") String pwd, @Param("name") String adminName);
+    DataMap validateAdminID(@Param("id") String id);
 }

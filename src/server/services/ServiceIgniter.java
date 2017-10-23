@@ -1,5 +1,6 @@
 package server.services;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import databases.exception.NothingToTakeException;
 
 import org.eclipse.jetty.server.Server;
@@ -117,6 +118,28 @@ public class ServiceIgniter {
                     }catch (NothingToTakeException e){
                         return new Response(ResponseConst.CODE_INVALID_PARAM, ResponseConst.MSG_INVALID_PARAM);
                     }
+                }else{
+                    return new Response(ResponseConst.CODE_FAILURE, ResponseConst.MSG_FAILURE);
+                }
+
+            }), RestUtil::toJson);
+
+            service.get("/saveAdmin", ((request, response) -> {
+                DataMap map = RestProcessor.makeProcessData(request.raw());
+
+                if(DataMapUtil.isValid(map, "id", "pwd")) {
+                    String adminID = map.getString("id");
+                    String adminPwd = map.getString("pwd");
+                    String adminName = map.getString("name");
+
+                    Boolean isValid = commonSVC.validateAdminID(adminID);
+                    Log.e("isValid ::::: "+isValid);
+                    if(isValid == false)
+                        return new Response(ResponseConst.CODE_ALREADY_EXIST, ResponseConst.MSG_ALREADY_EXIST);
+
+                    commonSVC.saveAdmin(adminID, adminPwd, adminName);
+                    return new Response(ResponseConst.CODE_SUCCESS, ResponseConst.MSG_SUCCESS);
+
                 }else{
                     return new Response(ResponseConst.CODE_FAILURE, ResponseConst.MSG_FAILURE);
                 }

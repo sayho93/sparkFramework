@@ -3,11 +3,27 @@
 <mapper namespace="databases.mybatis.mapper.AdminMapper">
 
     <select id="getAdmin" resultType="DataMap">
-        SELECT * FROM tblAdmin WHERE adminNo = #{no} LIMIT 1
+        SELECT * FROM tblAdmin WHERE adminNo = #{no} AND `status`=1 LIMIT 1
     </select>
 
     <select id="AdminLogin" resultType="DataMap">
-        SELECT * FROM tblAdmin WHERE adminID = #{id} AND adminPwd = #{pwd} LIMIT 1
+        SELECT * FROM tblAdmin WHERE adminID = #{id} AND adminPwd = #{pwd} AND `status`=1 LIMIT 1
+    </select>
+
+    <select id="validateAdminID" resultType="DataMap">
+        SELECT COUNT(*) cnt FROM tblAdmin WHERE adminID = #{id} AND `status`=1
+    </select>
+
+    <select id="saveAdmin" resultType="DataMap">
+        INSERT INTO tblAdmin(adminID, adminPwd, adminName, lastLoginDate, regDate)
+        VALUES
+        (
+            #{id},
+            MD5(#{pwd}),
+            #{name},
+            NOW(),
+            NOW()
+        )
     </select>
 
 </mapper>

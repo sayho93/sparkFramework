@@ -10,4 +10,19 @@
         SELECT * FROM tblAdmin WHERE adminID = #{id} AND adminPwd = #{pwd} LIMIT 1
     </select>
 
+    <select id="validateAdminID" resultType="DataMap">
+        SELECT COUNT(*) cnt FROM tblAdmin WHERE adminID = #{id}
+    </select>
+
+    <select id="saveAdmin" resultType="DataMap">
+        INSERT INTO tblAdmin(adminID, adminPwd, adminName, lastLoginDate, regDate)
+        VALUES
+        (
+            #{id},
+            MD5(#{pwd}),
+            #{name},
+            NOW(),
+            NOW()
+        )
+    </select>
 </mapper>

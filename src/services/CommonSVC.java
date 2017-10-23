@@ -27,4 +27,23 @@ public class CommonSVC extends BaseService{
             return map;
         }
     }
+
+    public void saveAdmin(String adminID, String adminPwd, String adminName){
+        try(SqlSession sqlSession = super.getSession()) {
+            AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+            mapper.saveAdmin(adminID, adminPwd, adminName);
+        }
+    }
+
+    public boolean validateAdminID(String id) throws NothingToTakeException{
+        try(SqlSession sqlSession = super.getSession()) {
+            AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+            DataMap map = mapper.validateAdminID(id);
+
+            if(map.getInt("cnt") > 0)
+                return false;
+            else
+                return true;
+        }
+    }
 }
