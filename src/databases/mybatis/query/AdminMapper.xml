@@ -14,7 +14,7 @@
         SELECT COUNT(*) cnt FROM tblAdmin WHERE adminID = #{id} AND `status`=1
     </select>
 
-    <select id="saveAdmin" resultType="DataMap">
+    <insert id="saveAdmin">
         INSERT INTO tblAdmin(adminID, adminPwd, adminName, lastLoginDate, regDate)
         VALUES
         (
@@ -24,6 +24,6 @@
             NOW(),
             NOW()
         )
-    </select>
+    </insert>
 
 </mapper>
